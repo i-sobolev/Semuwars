@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d5df4cd28e1d8ce4c8aa07921d9a7f5a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - PlS: {instanceID: 0}
+  - bul: {instanceID: 0}
+  - spawn: {fileID: 584926640926750190, guid: 800e2f06e35c3d549b9a1ea5d3b916df, type: 3}
+  - blood: {instanceID: 0}
+  - score: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
