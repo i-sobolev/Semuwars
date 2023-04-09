@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayersCamera : MonoBehaviour
@@ -6,6 +7,11 @@ public class PlayersCamera : MonoBehaviour
     [SerializeField] private Camera _camera;
     
     private List<Character> _characters = new();
+
+    private void Start()
+    {
+        _characters = FindObjectsOfType<Character>().ToList();
+    }
 
     private void OnEnable()
     {
