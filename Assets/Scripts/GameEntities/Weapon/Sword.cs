@@ -22,7 +22,7 @@ public class Sword : Weapon
         {
             Owner.Movement.TossInOppositeDirection();
 
-            ParticlesSpawner.Instance.SpawnSparks((transform.position + sword.transform.position) / 2);
+            ParticlesSpawner.Instance.SpawnSparksClientRpc((transform.position + sword.transform.position) / 2);
         }
     }
 
@@ -49,9 +49,9 @@ public class Sword : Weapon
     {
         var characterMovement = Owner.Movement;
 
-        _collider.offset = _baseColliderOffset * characterMovement.ViewDiretion.x;
+        _collider.offset = _baseColliderOffset * characterMovement.ViewDiretion.Value.x;
 
-        if (!characterMovement.IsGrounded)
+        if (!characterMovement.IsGrounded.Value)
             _collider.offset = new Vector2(_collider.offset.x, _notGroundedOffsetY);
     }
 }

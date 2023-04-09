@@ -9,7 +9,15 @@ public class NetworkTest : MonoBehaviour
 
     private void Start()
     {
-        _host.onClick.AddListener(() => NetworkManager.Singleton.StartHost());
-        _client.onClick.AddListener(() => NetworkManager.Singleton.StartClient());
+        _host.onClick.AddListener(() =>
+        {
+            NetworkManager.Singleton.StartHost();
+            gameObject.SetActive(false);
+        });
+        _client.onClick.AddListener(() =>
+        {
+            NetworkManager.Singleton.StartClient();
+            gameObject.SetActive(false);
+        });
     }
 }

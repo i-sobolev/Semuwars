@@ -18,6 +18,12 @@ public class Kunai : Weapon
 
     private void FixedUpdate()
     {
+        RotateClientRpc();
+    }
+
+    [ClientRpc]
+    private void RotateClientRpc()
+    {
         _rigidBody.rotation += _rigidBody.velocity.x < 0 ? 0.1f : -0.1f;
         _spriteRenderer.flipX = _rigidBody.velocity.x < 0 ? true : false;
     }
@@ -25,7 +31,7 @@ public class Kunai : Weapon
     private void Start()
     {
         _bouncesCount = Random.Range(1, 5);
-        _rigidBody.AddForce(Owner.Movement.ViewDiretion * _speed, ForceMode2D.Impulse);
+        _rigidBody.AddForce(Owner.Movement.ViewDiretion.Value * _speed, ForceMode2D.Impulse);
         StartCoroutine(DisableCollider());
     }
 
@@ -53,7 +59,7 @@ public class Kunai : Weapon
         {
             _rigidBody.velocity = (transform.position - kunai.transform.position) * 10;
 
-            ParticlesSpawner.Instance.SpawnSparks((transform.position + kunai.transform.position) / 2);
+            ParticlesSpawner.Instance.SpawnSparksClientRpc((transform.position + kunai.transform.position) / 2);
         }
 
         if (other.gameObject.TryGetComponent<Character>(out _))
@@ -68,7 +74,7 @@ public class Kunai : Weapon
         {
             _rigidBody.velocity = new Vector2(-_rigidBody.velocity.x, _rigidBody.velocity.y);
 
-            ParticlesSpawner.Instance.SpawnSparks(transform.position);
+            ParticlesSpawner.Instance.SpawnSparksClientRpc(transform.position);
         }
     }
 }

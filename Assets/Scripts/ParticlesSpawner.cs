@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class ParticlesSpawner : Singleton<ParticlesSpawner>
+public class ParticlesSpawner : NetworkSingleton<ParticlesSpawner>
 {
     [SerializeField] private ParticleSystem _sparksTemplate;
     [SerializeField] private ParticleSystem _bloodTemplate;
@@ -11,12 +12,14 @@ public class ParticlesSpawner : Singleton<ParticlesSpawner>
         spawnedParticles.Play();
     }
 
-    public void SpawnSparks(Vector2 position)
+    [ClientRpc]
+    public void SpawnSparksClientRpc(Vector2 position)
     {
         SpawnParticles(position, _sparksTemplate);
     }
 
-    public void SpawnBlood(Vector2 position)
+    [ClientRpc]
+    public void SpawnBloodClientRpc(Vector2 position)
     {
         SpawnParticles(position, _bloodTemplate);
     }

@@ -13,6 +13,8 @@ public class Player : NetworkBehaviour
 
     private Character _character;
 
+    public Character Character => _character;
+
     private void Start()
     {
         PlayerConnected?.Invoke(this);

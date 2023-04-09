@@ -15,11 +15,7 @@ public class Character : NetworkBehaviour
 
     private void Start()
     {
-        _characterMovement.Jumped += () =>
-        {
-            var particles = Instantiate(_jumpParticles, _jumpParticles.transform.parent);
-            particles.Play();
-        };
+        _characterMovement.Jumped += SpawnJumpParticlesClientRpc;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,17 +38,24 @@ public class Character : NetworkBehaviour
 
     private void Update()
     {
-        _spriteRenderer.flipX = Movement.ViewDiretion == Vector2.left;
+        _spriteRenderer.flipX = Movement.ViewDiretion.Value == Vector2.left;
     }
 
     private void Respawn()
     {
-        ParticlesSpawner.Instance.SpawnBlood(transform.position);
+        ParticlesSpawner.Instance.SpawnBloodClientRpc(transform.position);
 
         var respawnPosition = RespawnPositionsHelper.Instance.GetRespawnPosition();
 
         transform.position = respawnPosition;
 
         Movement.ResetVelocity();
+    }
+
+    [ClientRpc]
+    private void SpawnJumpParticlesClientRpc()
+    {
+        var particles = Instantiate(_jumpParticles, _jumpParticles.transform.parent);
+        particles.Play();
     }
 }

@@ -35,10 +35,9 @@ public class CharacterCombat : MonoBehaviour
         KunaiThrown?.Invoke();
     }
 
-    //[ServerRpc]
     public void InstantiateKunai(Character owner)
     {
-        var kunai = Instantiate(_kunaiTemplate, (Vector2)transform.position + _kunaiSpawnPosition * owner.Movement.ViewDiretion.x, Quaternion.identity);
+        var kunai = Instantiate(_kunaiTemplate, (Vector2)transform.position + _kunaiSpawnPosition * owner.Movement.ViewDiretion.Value.x, Quaternion.identity);
 
         kunai.Owner = owner;
         kunai.GetComponent<NetworkObject>().Spawn();

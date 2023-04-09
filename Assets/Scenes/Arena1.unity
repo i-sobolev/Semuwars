@@ -788,7 +788,7 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 127.0.0.1
+    Address: 192.168.1.69
     Port: 7777
     ServerListenAddress: 
   DebugSimulator:
@@ -8375,7 +8375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 92, y: 20.503479}
+  m_AnchoredPosition: {x: 92, y: 20.503418}
   m_SizeDelta: {x: 160, y: 22.8686}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &188751057
@@ -13469,7 +13469,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 519420031}
-  _players: []
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -18394,6 +18393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 862878126}
   - component: {fileID: 862878127}
+  - component: {fileID: 862878128}
   m_Layer: 0
   m_Name: ParticlesSpawner
   m_TagString: Untagged
@@ -18432,6 +18432,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sparksTemplate: {fileID: 1503335692}
   _bloodTemplate: {fileID: 1115690123}
+--- !u!114 &862878128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862878125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3905239302
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &863648172
 GameObject:
   m_ObjectHideFlags: 0
@@ -27854,7 +27870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 441000, guid: 5d476fdbb7a864646aa6a217aa4e6166, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -37
       objectReference: {fileID: 0}
     - target: {fileID: 441000, guid: 5d476fdbb7a864646aa6a217aa4e6166, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32968,7 +32984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 441778, guid: 67a02ea392505844bab240611d904cc0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -37
       objectReference: {fileID: 0}
     - target: {fileID: 441778, guid: 67a02ea392505844bab240611d904cc0, type: 3}
       propertyPath: m_LocalPosition.z

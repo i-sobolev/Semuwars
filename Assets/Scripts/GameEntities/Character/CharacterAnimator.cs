@@ -27,9 +27,9 @@ public class CharacterAnimator : MonoBehaviour
 
     private void Update()
     {
-        SetGrounded(_characterMovement.IsGrounded);
-        SetMoving(_characterMovement.IsMoving);
-        SetSpeed(_characterMovement.Speed);
+        SetGrounded(_characterMovement.IsGrounded.Value);
+        SetMoving(_characterMovement.IsMoving.Value);
+        SetSpeed(_characterMovement.Speed.Value);
     }
 
 

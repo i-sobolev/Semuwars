@@ -2,7 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovement : NetworkBehaviour
 {
     public event UnityAction Jumped;
 
@@ -18,11 +18,11 @@ public class CharacterMovement : MonoBehaviour
 
     private int _jumpsAvailable = 0;
 
-    public bool IsGrounded { get; private set; }
-    public bool IsMoving { get; private set; }
-    public float Speed => Mathf.Abs(_rigidBody.velocity.x);
+    public NetworkVariable<bool> IsGrounded { get; private set; } = new (false);
+    public NetworkVariable<bool> IsMoving { get; private set; } = new (false);
+    public NetworkVariable<float> Speed => new (Mathf.Abs(_rigidBody.velocity.x));
 
-    public Vector2 ViewDiretion { get; private set; } = Vector2.right;
+    public NetworkVariable<Vector2> ViewDiretion { get; private set; } = new (Vector2.right);
 
     private void Start()
     {
@@ -39,7 +39,7 @@ public class CharacterMovement : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Ground>(out _))
         {
             _jumpsAvailable = _defaultMultipleJumpsCount;
-            IsGrounded = true;
+            IsGrounded.Value = true;
         }
     }
 
@@ -47,7 +47,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Ground>(out _))
         {
-            IsGrounded = false;
+            IsGrounded.Value = false;
         }
     }
 
@@ -68,10 +68,10 @@ public class CharacterMovement : MonoBehaviour
 
         _rigidBody.AddForce(moveDirection.normalized * _acceleration * 100 * Time.deltaTime);
 
-        IsMoving = moveDirection != Vector2.zero;
+        IsMoving.Value = moveDirection != Vector2.zero;
 
         if (inputHorizontal == 1 || inputHorizontal == -1)
-            ViewDiretion = moveDirection;
+            ViewDiretion.Value = moveDirection;
     }
 
     public void ResetVelocity() => _rigidBody.velocity = Vector2.zero;
