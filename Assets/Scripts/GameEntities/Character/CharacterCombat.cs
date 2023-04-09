@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,12 +29,19 @@ public class CharacterCombat : MonoBehaviour
         if (_kunaiCooldown.Enabled)
             return;
 
-        var kunai = Instantiate(_kunaiTemplate, (Vector2)transform.position + _kunaiSpawnPosition * owner.Movement.ViewDiretion.x, Quaternion.identity);
-        
-        kunai.Owner = owner;
+        InstantiateKunai(owner);
 
         _kunaiCooldown.Start();
         KunaiThrown?.Invoke();
+    }
+
+    //[ServerRpc]
+    public void InstantiateKunai(Character owner)
+    {
+        var kunai = Instantiate(_kunaiTemplate, (Vector2)transform.position + _kunaiSpawnPosition * owner.Movement.ViewDiretion.x, Quaternion.identity);
+
+        kunai.Owner = owner;
+        kunai.GetComponent<NetworkObject>().Spawn();
     }
 
     public void MeleeAttack(Character owner)

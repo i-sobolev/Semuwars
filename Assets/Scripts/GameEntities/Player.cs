@@ -1,21 +1,91 @@
-using UnityEngine;
+#pragma warning disable
 
-public class Player : MonoBehaviour
+using UnityEngine;
+using Unity.Netcode;
+using UnityEngine.Events;
+
+public class Player : NetworkBehaviour
 {
-    [SerializeField] private Character _character;
+    public static event UnityAction<NetworkBehaviourReference> PlayerConnected;
+
+    public static event UnityAction<Player> PlayerSpawned;
+    public static event UnityAction<Player> PlayerDestroyed;
+
+    private Character _character;
+
+    private void Start()
+    {
+        PlayerConnected?.Invoke(this);
+
+        PlayerSpawned?.Invoke(this);
+    }
+
+    private void OnDestroy()
+    {
+        base.OnDestroy();
+
+        PlayerDestroyed?.Invoke(this);
+    }
+
+    [ClientRpc]
+    public void SetCharacterClientRpc(NetworkObjectReference characterReference)
+    {
+        characterReference.TryGet(out var characterObject);
+
+        _character = characterObject.GetComponent<Character>();
+    }
 
     private void Update()
     {
+        if (!IsOwner || !_character)
+            return;
+
+        //float inputHorizontal = Input.GetAxisRaw("Horizontal");
+        //_character.Movement.Move(inputHorizontal);
+
+        //if (Input.GetKeyDown(KeyCode.W))
+        //    _character.Movement.Jump();
+
+        //if (Input.GetMouseButtonDown(0))
+        //    _character.Combat.MeleeAttack(_character);
+
+        //if (Input.GetMouseButtonDown(1))
+        //    _character.Combat.ThrowKunai(_character);
+
         float inputHorizontal = Input.GetAxisRaw("Horizontal");
-        _character.Movement.Move(inputHorizontal);
+        MoveServerRpc(inputHorizontal);
 
         if (Input.GetKeyDown(KeyCode.W))
-            _character.Movement.Jump();
+            JumpServerRpc();
 
         if (Input.GetMouseButtonDown(0))
-            _character.Combat.MeleeAttack(_character);
+            MeleeAttackServerRpc();
 
         if (Input.GetMouseButtonDown(1))
-            _character.Combat.ThrowKunai(_character);
+            ThrowKunaiServerRpc();
+    }
+
+    [ServerRpc]
+    private void MoveServerRpc(float inputHorizontal)
+    {
+        _character.Movement.Move(inputHorizontal);
+    }
+
+    [ServerRpc]
+    private void JumpServerRpc()
+    {
+        _character.Movement.Jump();
+    }
+
+    [ServerRpc]
+    private void MeleeAttackServerRpc()
+    {
+        _character.Combat.MeleeAttack(_character);
+    }
+
+    [ServerRpc]
+    private void ThrowKunaiServerRpc()
+    {
+        _character.Combat.ThrowKunai(_character);
     }
 }

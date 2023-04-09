@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : NetworkBehaviour
 {
     [SerializeField] private CharacterMovement _characterMovement;
     [SerializeField] private CharacterCombat _characterCombat;

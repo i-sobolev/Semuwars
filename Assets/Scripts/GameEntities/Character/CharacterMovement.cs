@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -66,8 +67,6 @@ public class CharacterMovement : MonoBehaviour
         var moveDirection = new Vector2 { x = inputHorizontal };
 
         _rigidBody.AddForce(moveDirection.normalized * _acceleration * 100 * Time.deltaTime);
-
-        IsMoving = true;
 
         IsMoving = moveDirection != Vector2.zero;
 
