@@ -29,7 +29,7 @@ public class PlayersCamera : MonoBehaviour
     private void OnPlayerDestroyed(Player player) => _characters.Remove(player.Character);
 
 
-    private void Update()
+    private void LateUpdate()
     {
         if (_characters.Count == 0)
             return;
