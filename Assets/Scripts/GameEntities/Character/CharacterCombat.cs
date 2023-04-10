@@ -32,6 +32,9 @@ public class CharacterCombat : MonoBehaviour
         InstantiateKunai(owner);
 
         _kunaiCooldown.Start();
+
+        AudioPlayer.Instance.PlayKunaiThrowClientRpc();
+
         KunaiThrown?.Invoke();
     }
 
@@ -53,6 +56,9 @@ public class CharacterCombat : MonoBehaviour
         _sword.Attack();
 
         _swordCooldown.Start();
+
+        AudioPlayer.Instance.PlaySwordHitClientRpc();
+
         AttackedMelee?.Invoke();
     }
 

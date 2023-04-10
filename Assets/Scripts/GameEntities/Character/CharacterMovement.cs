@@ -40,6 +40,8 @@ public class CharacterMovement : NetworkBehaviour
         {
             _jumpsAvailable = _defaultMultipleJumpsCount;
             IsGrounded.Value = true;
+
+            AudioPlayer.Instance.PlayCharacterLandingClientRpc();
         }
     }
 

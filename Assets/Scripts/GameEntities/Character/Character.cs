@@ -29,6 +29,8 @@ public class Character : NetworkBehaviour
             {
                 Respawn();
 
+                AudioPlayer.Instance.PlayCharacterKillClientRpc();
+
                 Killed?.Invoke(weapon.Owner);
             }
         }
@@ -41,6 +43,8 @@ public class Character : NetworkBehaviour
             if (weapon is not Sword || weapon.Owner != this)
             {
                 Respawn();
+
+                AudioPlayer.Instance.PlayCharacterKillClientRpc();
 
                 Killed?.Invoke(weapon.Owner);
             }

@@ -47,11 +47,13 @@ public class Kunai : Weapon
         {
             _rigidBody.AddForceAtPosition(Vector2.up * 10, Vector2.right * 15);
             _bouncesCount--;
+            AudioPlayer.Instance.PlayKunaiGroundHitClientRpc();
 
             if (_bouncesCount <= 0)
             {
                 _rigidBody.simulated = false;
                 _animator.Play("Stucked");
+                AudioPlayer.Instance.PlayKunaiStuckClientRpc();
             }
         }
 
@@ -60,6 +62,8 @@ public class Kunai : Weapon
             _rigidBody.velocity = (transform.position - kunai.transform.position) * 10;
 
             ParticlesSpawner.Instance.SpawnSparksClientRpc((transform.position + kunai.transform.position) / 2);
+
+            AudioPlayer.Instance.PlaySwordCrossClientRpc();
         }
 
         if (other.gameObject.TryGetComponent<Character>(out _))

@@ -23,6 +23,8 @@ public class Sword : Weapon
             Owner.Movement.TossInOppositeDirection();
 
             ParticlesSpawner.Instance.SpawnSparksClientRpc((transform.position + sword.transform.position) / 2);
+
+            AudioPlayer.Instance.PlaySwordCrossClientRpc();
         }
     }
 
