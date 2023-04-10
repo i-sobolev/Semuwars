@@ -16,6 +16,8 @@ public class Player : NetworkBehaviour
     private Character _character;
     public Character Character => _character;
 
+    public NetworkVariable<Vector2> CharacterPosition = new();
+
     public int Score { get; set; } = 0;
     public string Name { get; set; } = "Player ";
 
@@ -76,6 +78,14 @@ public class Player : NetworkBehaviour
 
         if (Input.GetMouseButtonDown(1))
             ThrowKunaiServerRpc();
+
+        RefreshCharacterPositionServerRpc();
+    }
+
+    [ServerRpc]
+    private void RefreshCharacterPositionServerRpc()
+    {
+        CharacterPosition.Value = _character.transform.position;
     }
 
     [ServerRpc]

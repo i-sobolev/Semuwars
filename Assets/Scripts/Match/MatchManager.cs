@@ -7,13 +7,12 @@ public class MatchManager : NetworkBehaviour
     [SerializeField] private MatchTimer _timer;
     [SerializeField] private Leaderboard _leaderboard;
 
-    //private NetworkVariable<List<NetworkBehaviourReference>> _playersReferences = new( new List<NetworkBehaviourReference>() );
     private List<Player> _players = new();
 
     private void Awake()
     {
-        if (!IsHost)
-            return;
+        //if (!IsHost)
+        //    return;
 
         Player.PlayerSpawned += OnPlayerSpawned;
 
@@ -32,13 +31,11 @@ public class MatchManager : NetworkBehaviour
         _leaderboard.Set(_players);
     }
 
-    //[ServerRpc]
     private void OnPlayerSpawned(Player player)
     {
         if (!IsHost)
             return;
 
-        //_playersReferences.Value.Add(new NetworkBehaviourReference(player));
 
         _players.Add(player);
 

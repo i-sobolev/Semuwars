@@ -19,6 +19,9 @@ public class Leaderboard : NetworkBehaviour
             result += $"{player.Name} - {player.Score}\n";
         }
 
-        _text.text = result;
+        SetTextClientRpc(result);
     }
+
+    [ClientRpc]
+    public void SetTextClientRpc(string value) => _text.text = value;
 }

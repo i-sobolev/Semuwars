@@ -69,7 +69,7 @@ public class PlayersArrows : MonoBehaviour
         {
             if (arrow.Player != null)
             {
-                arrow.ArrowImage.rectTransform.anchoredPosition = _camera.WorldToScreenPoint((Vector2)arrow.Player.Character.transform.position + _arrowOffset);
+                arrow.ArrowImage.rectTransform.anchoredPosition = _camera.WorldToScreenPoint(arrow.Player.CharacterPosition.Value + _arrowOffset);
             }
         }
     }
