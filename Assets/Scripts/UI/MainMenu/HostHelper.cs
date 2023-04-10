@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class HostHelper : MonoBehaviour
 {
+    [SerializeField] private MatchManager _matchManager;
     [SerializeField] private UnityTransport _unityTransport;
     [Space]
     [SerializeField] private TMP_InputField _inputField;
@@ -41,7 +42,12 @@ public class HostHelper : MonoBehaviour
         _durationText.text = _matchDuration.ToString();
     }
 
-    private void Host() => NetworkManager.Singleton.StartHost();
+    private void Host()
+    {
+        NetworkManager.Singleton.StartHost();
+
+        _matchManager.StartMatch(_matchDuration);
+    }
 
     private void OnInputFieldValueChanged(string newValue)
     {

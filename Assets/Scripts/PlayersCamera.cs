@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
 public class PlayersCamera : MonoBehaviour
@@ -10,6 +11,14 @@ public class PlayersCamera : MonoBehaviour
 
     private void Start()
     {
+        RefreshCharactersList();
+
+        NetworkManager.Singleton.OnClientConnectedCallback += (_) => RefreshCharactersList();
+    }
+    
+    public async void RefreshCharactersList()
+    {
+        await System.Threading.Tasks.Task.Delay(1000);
         _characters = FindObjectsOfType<Character>().ToList();
     }
 

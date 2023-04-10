@@ -1,8 +1,11 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Character : NetworkBehaviour
 {
+    public event UnityAction<Character> Killed;
+
     [SerializeField] private CharacterMovement _characterMovement;
     [SerializeField] private CharacterCombat _characterCombat;
     [Space]
@@ -23,7 +26,11 @@ public class Character : NetworkBehaviour
         if (collision.TryGetComponent<Weapon>(out var weapon))
         {
             if (weapon is not Sword || weapon.Owner != this)
+            {
                 Respawn();
+
+                Killed?.Invoke(weapon.Owner);
+            }
         }
     }
 
@@ -32,7 +39,11 @@ public class Character : NetworkBehaviour
         if (collision.gameObject.TryGetComponent<Weapon>(out var weapon))
         {
             if (weapon is not Sword || weapon.Owner != this)
+            {
                 Respawn();
+
+                Killed?.Invoke(weapon.Owner);
+            }
         }
     }
 

@@ -11,13 +11,17 @@ public class Player : NetworkBehaviour
     public static event UnityAction<Player> PlayerSpawned;
     public static event UnityAction<Player> PlayerDestroyed;
 
-    private Character _character;
+    public event UnityAction<Character, Player> CharacterKilled;
 
+    private Character _character;
     public Character Character => _character;
+
+    public int Score { get; set; } = 0;
+    public string Name { get; set; } = "Player ";
 
     private void Start()
     {
-        PlayerConnected?.Invoke(this);
+        PlayerConnected?.Invoke(new NetworkBehaviourReference(this));
 
         PlayerSpawned?.Invoke(this);
     }
@@ -35,6 +39,13 @@ public class Player : NetworkBehaviour
         characterReference.TryGet(out var characterObject);
 
         _character = characterObject.GetComponent<Character>();
+
+        _character.Killed += OnCharacterKilled;
+    }
+
+    private void OnCharacterKilled(Character killer)
+    {
+        CharacterKilled?.Invoke(killer, this);
     }
 
     private void Update()

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,20 @@ public class PlayersArrows : MonoBehaviour
 
     private void Awake()
     {
+        RefreshArrowsList();
+
+        NetworkManager.Singleton.OnClientConnectedCallback += (_) => RefreshArrowsList();
+    }
+
+    public async void RefreshArrowsList()
+    {
+        await System.Threading.Tasks.Task.Delay(1000);
+
+        foreach (var arrow in _arrows)
+            Destroy(arrow.ArrowImage);
+
+        _arrows.Clear();
+
         foreach (var player in FindObjectsOfType<Player>())
             OnPlayerSpawned(player);
     }

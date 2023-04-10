@@ -5,6 +5,8 @@ public class GameManager : NetworkBehaviour
 {
     [SerializeField] private NetworkObject _characterTemplate;
 
+    private int _playersCounter = 1;
+
     private void Awake()
     {
         Player.PlayerConnected += OnPlayerSpawnedServerRpc;
@@ -22,5 +24,8 @@ public class GameManager : NetworkBehaviour
         playerReference.TryGet<Player>(out var player);
 
         player.SetCharacterClientRpc(reerere);
+        player.Name += _playersCounter.ToString();
+        
+        _playersCounter++;
     }
 }
